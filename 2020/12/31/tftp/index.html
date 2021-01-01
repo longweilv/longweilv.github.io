@@ -6,17 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Hexo</title>
+  <title>Installing and Configuring TFTP Server on Ubuntu | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Installing and Configuring TFTP Server on UbuntuTFTP(Trivial File Transfer Protocol) is a simplified version of FTP(File Transfer Protocol). It was designed to be easy and simple. TFTP leaves out many">
+  <meta name="description" content="TFTP(Trivial File Transfer Protocol) is a simplified version of FTP(File Transfer Protocol). It was designed to be easy and simple. TFTP leaves out many authentication features of FTP and it runs on U">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo">
+<meta property="og:title" content="Installing and Configuring TFTP Server on Ubuntu">
 <meta property="og:url" content="http://example.com/2020/12/31/tftp/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Installing and Configuring TFTP Server on UbuntuTFTP(Trivial File Transfer Protocol) is a simplified version of FTP(File Transfer Protocol). It was designed to be easy and simple. TFTP leaves out many">
+<meta property="og:description" content="TFTP(Trivial File Transfer Protocol) is a simplified version of FTP(File Transfer Protocol). It was designed to be easy and simple. TFTP leaves out many authentication features of FTP and it runs on U">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-12-31T10:33:04.303Z">
-<meta property="article:modified_time" content="2021-01-01T02:51:11.699Z">
+<meta property="article:modified_time" content="2021-01-01T11:15:16.132Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
   
@@ -157,22 +157,50 @@
             <article id="post-tftp" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Installing and Configuring TFTP Server on Ubuntu
+    </h1>
+  
+
+        
+        <a href="/2020/12/31/tftp/" class="archive-article-date">
+  	<time datetime="2020-12-31T10:33:04.303Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-31</time>
+</a>
+        
+      </header>
+    
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Installing-and-Configuring-TFTP-Server-on-Ubuntu"><a href="#Installing-and-Configuring-TFTP-Server-on-Ubuntu" class="headerlink" title="Installing and Configuring TFTP Server on Ubuntu"></a>Installing and Configuring TFTP Server on Ubuntu</h1><p>TFTP(Trivial File Transfer Protocol) is a simplified version of FTP(File Transfer Protocol). It was designed to be easy and simple. TFTP leaves out many authentication features of FTP and it runs on UDP port 69. As it is very lightweight, it is still used for different purposes.</p>
+        <p>TFTP(Trivial File Transfer Protocol) is a simplified version of FTP(File Transfer Protocol). It was designed to be easy and simple. TFTP leaves out many authentication features of FTP and it runs on UDP port 69. As it is very lightweight, it is still used for different purposes.</p>
 <p>TFTP is used in places where you don’t need much security. Instead, you need a way to easily upload files to and download files from the server. CISCO devices use TFTP protocol to store configuration files and CISCO ISO images for backup purposes. The network boot protocols such as BOOTP, PXE etc uses TFTP to boot operating systems over the network. Thin clients also use TFTP protocol for booting operating systems. Many electronics circuit boards, microprocessors also use TFTP to download firmware into the chip. Overall, TFTP has many uses even today.</p>
 <p>In this article, I am going to show you how to install and configure TFTP server on Ubuntu. So, let’s get started.</p>
-<p>Installing TFTP Server:</p>
-<p>In this article, I am going to install the <strong>tftpd-hpa</strong> TFTP server package on Ubuntu. The package <strong>tftpd-hpa</strong> is available in the official package repository of Ubuntu. So, you can easily install it with the APT package manager.</p>
+<h2 id="Installing-TFTP-Server"><a href="#Installing-TFTP-Server" class="headerlink" title="Installing TFTP Server:"></a>Installing TFTP Server:</h2><p>In this article, I am going to install the <strong>tftpd-hpa</strong> TFTP server package on Ubuntu. The package <strong>tftpd-hpa</strong> is available in the official package repository of Ubuntu. So, you can easily install it with the APT package manager.</p>
 <p>First, update the APT package repository cache with the following command:</p>
-<p><code>$ sudo apt update</code></p>
+<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt update</span><br></pre></td></tr></table></figure>
 <p>The APT package repository cache should be updated.</p>
 <p>Now, install the <strong>tftpd-hpa</strong> package with the following command:</p>
-<p><code>sudo apt install tftpd-hpa</code></p>
+<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install tftpd-hpa</span><br></pre></td></tr></table></figure>
 <p><strong>tftpd-hpa</strong> package should be installed.</p>
 <p>Now, check whether the <strong>tftpd-hpa</strong> service is running with the following command:</p>
-<p><code>sudo systemctl status tftpd-hpa</code></p>
+<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl status tftpd-hpa</span><br></pre></td></tr></table></figure>
 <p>The <strong>tftpd-hpa</strong> service is running. So, TFTP server is working just fine. In the next section, I will show you how to configure it.</p>
+<h2 id="Configuring-TFTP-Server"><a href="#Configuring-TFTP-Server" class="headerlink" title="Configuring TFTP Server:"></a>Configuring TFTP Server:</h2><p>The default configuration file of <strong>tftpd-hpa</strong> server is <strong>/etc/default/tftpd-hpa</strong>. If you want to configure the TFTP server, then you have to modify this configuration file and restart the <strong>tftpd-hpa</strong> service afterword.</p>
+<p>To modify the <strong>/etc/default/tftpd-hpa</strong> configuration file, run the following command:</p>
+<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo nano /etc/default/tftpd-hpa</span><br></pre></td></tr></table></figure>
+<p>The configuration file should be opened for editing. This is the default configuration of the TFTP server.</p>
+<p>Here, <strong>TFTP_USERNAME</strong> is set to <strong>tftp</strong>. It means the TFTP server will run as the user <strong>tftp</strong>.</p>
+<p><strong>TFTP_DIRECTORY</strong> is set to <strong>/tftpboot</strong>. It means <strong>/tftpboot</strong> is the directory on this server which you will be able to accessing via TFTP.</p>
+<p><strong>TFTP_ADDRESS</strong> is set to <strong>:69</strong>. It means TFTP will run on port 69.</p>
+<p><strong>TFTP_OPTIONS</strong> is set to <strong>–secure</strong>. This variable sets the TFTP options. There are many options that you can use to configure how the TFTP server will behave. I will talk about some of them later. The <strong>–secure</strong> option means change the TFTP directory to what is set on the <strong>TFTP_DIRECTORY</strong> variable when you connect to the TFTP server automatically. This is a security feature. If you hadn’t set the <strong>–secure</strong> option, then you would have to connect to the TFTP server and set the directory manually. Which is a lot of hassle and very insecure.</p>
+<p>Now, restart the tftpd-hpa service with the following command:</p>
+<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl restart tftpd-hpa</span><br></pre></td></tr></table></figure>
+<p>Now, check whether the tftpd-hpa service is running with the following command:</p>
+<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl status tftpd-hpa</span><br></pre></td></tr></table></figure>
+<p>As you can see, the tftpd-hpa service is running. So, the configuration is successful.</p>
+<p>So, that’s how you install and configure TFTP server on Ubuntu. Thanks for reading this article.</p>
 
       
 
